@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ohassnao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:54:12 by ohassnao          #+#    #+#             */
-/*   Updated: 2022/11/26 18:02:26 by ohassnao         ###   ########.fr       */
+/*   Created: 2022/11/26 20:14:14 by ohassnao          #+#    #+#             */
+/*   Updated: 2022/11/26 20:20:03 by ohassnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	free_ptr(char **stach)
 {
@@ -22,28 +22,28 @@ char	*get_next_line(int fd)
 {
 	char		*buff;
 	int			val_ret;
-	static char	*stach;
+	static char	*stach[OPEN_MAX];
 	int			index_nl;
 	char		*line;
 
 	ft_allocation(&buff);
-	if (!stach)
-		stach = ft_strdup("");
+	if (!stach[fd])
+		stach[fd] = ft_strdup("");
 	val_ret = read(fd, buff, BUFFER_SIZE);
 	while (val_ret >= 0)
 	{
 		buff[val_ret] = '\0';
-		stach = ft_strjoin(stach, buff);
-		index_nl = check_new_l(stach);
+		stach[fd] = ft_strjoin(stach[fd], buff);
+		index_nl = check_new_l(stach[fd]);
 		if (index_nl != -1)
-			return (free(buff), extract_line(&stach, &line, index_nl));
-		if (!val_ret && !stach[0])
+			return (free(buff), extract_line(&stach[fd], &line, index_nl));
+		if (!val_ret && !stach[fd][0])
 			break ;
 		if (!val_ret)
-			return (free(buff), after_newline(&stach, 0));
+			return (free(buff), after_newline(&stach[fd], 0));
 		val_ret = read(fd, buff, BUFFER_SIZE);
 	}
-	free_ptr(&stach);
+	free_ptr(&stach[fd]);
 	return (free(buff), NULL);
 }
 

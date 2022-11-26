@@ -6,7 +6,7 @@
 /*   By: ohassnao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 22:11:23 by ohassnao          #+#    #+#             */
-/*   Updated: 2022/11/25 15:45:15 by ohassnao         ###   ########.fr       */
+/*   Updated: 2022/11/26 18:01:18 by ohassnao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	main(void)
 	int	fd;
 
 	fd = open("file", O_CREAT | O_RDWR);
-	printf("*/%s/*", get_next_line(fd));
-	printf("*/%s/*", get_next_line(fd));
-	printf("*/%s/*", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 }
-
